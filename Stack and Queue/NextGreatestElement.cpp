@@ -10,11 +10,21 @@ void nextGreatestElement(vector<int>& v){
     s.push(v[n-1]);
     v[n-1] = -1;
     for(int i=n-2;i>=0;i--){
-        if(s.top()>v[i]) v[i] = -1;
+        int k = v[i];
+        if(s.top()>k){
+             v[i] = s.top();
+             s.push(k);
+        }
         else{
-            int k = v[i];
-            v[i] = s.top();
-            s.pop();
+            while(!s.empty() && s.top()<k){
+                s.pop();
+            }
+            if(s.empty()){
+                v[i] = -1;
+            }
+            else{
+                v[i] = s.top();
+            }
             s.push(k);
         }
     }
